@@ -86,17 +86,17 @@ const Login = () => {
    {
     state === "Sign Up" && <div className='w-full'>
     <p>Full Name:</p>
-    <input className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="text" onChange={(e)=>setName(e.target.value)} value={name} />
+    <input className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="text" onChange={(e)=>setName(e.target.value)} value={name} required />
    </div>
    }
    
    <div className='w-full'>
     <p>Email:</p>
-    <input className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="email" onChange={(e)=>setEmail(e.target.value)} value={email} />
+    <input className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="email" onChange={(e)=>setEmail(e.target.value)} value={email} required />
    </div>
    <div className='w-full'>
     <p>Password:</p>
-    <input className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="text" onChange={(e)=>setPassword(e.target.value)} value={password} />
+    <input type="password" className='border border-zinc-300 outline-cyan-400 rounded w-full p-6 pt-1' type="text" onChange={(e)=>setPassword(e.target.value)} value={password} required />
    </div>
    <button type='submit' className='bg-blue-600 text-white w-full py-2 rounded-md text-base hover:scale-x-105 transition-all duration-1000 ease-in-out'>{ state === 'Sign Up' ? 'Create Account' : 'Login'}</button>
     { state === 'Sign Up' ? 
