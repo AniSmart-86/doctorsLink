@@ -21,7 +21,7 @@ const TopDoctors = () => {
             setIsLoading(false);
             navigate("/doctors")
             scrollTo(0,0)
-        }, 2000);
+        }, 1000);
       };
     
 
@@ -37,7 +37,7 @@ const TopDoctors = () => {
                   initial={{ opacity: 0, y: 0}}
                   whileInView={{ opacity: 1, y: 50,
                     scale: 1.1,
-                   transition:{duration: 3} }}
+                   transition:{duration: 2} }}
                   >
               <div key={item._id} onClick={()=> {navigate(`/appointment/${item._id}`); scrollTo(0,0);}} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-1000 ease-in-out">
                     <img className='bg-blue-50 w-full' src={item.img} alt="" />
