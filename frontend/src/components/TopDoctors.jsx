@@ -39,7 +39,7 @@ const TopDoctors = () => {
                     scale: 1.1,
                    transition:{duration: 3} }}
                   >
-              <div key={item._id} onClick={()=> {navigate(`/appointment/${item._id}`); scrollTo(0,0)}} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-1000 ease-in-out">
+              <div key={item._id} onClick={()=> {navigate(`/appointment/${item._id}`); scrollTo(0,0);}} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-1000 ease-in-out">
                     <img className='bg-blue-50 w-full' src={item.img} alt="" />
                     <div className="p-4">
                         <div className="flex items-center gap-2 text-sm text-center text-green-500">
@@ -47,7 +47,7 @@ const TopDoctors = () => {
                         </div>
                         <p className="text-gray-900 text-lg font-medium">{item.name}</p>
                         <p className="text-gray-600 text-sm">{item.speciality}</p>
-                    <button className='border px-8 mt-4 rounded-3xl bg-green-500 text-white'>Book</button>
+                    <button className='border px-8 mt-3 rounded-3xl bg-green-500 text-white'>Book</button>
                     </div>
                 </div>
             </motion.div>
