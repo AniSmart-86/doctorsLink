@@ -20,7 +20,7 @@ const TopDoctors = () => {
         setTimeout(() => {
             setIsLoading(false);
             navigate("/doctors")
-            scrollTo(0,0)
+            scrollTo(0, 0);
         }, 1000);
       };
     
@@ -36,10 +36,10 @@ const TopDoctors = () => {
                   <motion.div
                   initial={{ opacity: 0, y: 0}}
                   whileInView={{ opacity: 1, y: 50,
-                    scale: 1.1,
+                    scale: 1.01,
                    transition:{duration: 2} }}
                   >
-              <div key={item._id} onClick={()=> {navigate(`/appointment/${item._id}`); scrollTo(0,0);}} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-1000 ease-in-out">
+              <div key={item._id} onClick={()=> {navigate(`/appointment/${item._id}`); scrollTo(0, 0)}} className="border border-blue-200 rounded-xl overflow-hidden cursor-pointer hover:translate-y-[-10px] transition-all duration-1000 ease-in-out">
                     <img className='bg-blue-50 w-full' src={item.img} alt="" />
                     <div className="p-4">
                         <div className="flex items-center gap-2 text-sm text-center text-green-500">
