@@ -98,7 +98,7 @@ const handleClick = () => {
 
   useEffect(() => {
     // Initial slot and date load
-    if (docSlots.length) {
+    if (docSlots.length > 0 && docSlots[0]?.[0]) {
       const firstSlot = docSlots[0][0];
       setDay({
         day: Days[firstSlot.datetime.getDay()],
@@ -108,10 +108,11 @@ const handleClick = () => {
   }, [docSlots]);
   
   const handleDay = (index, item) => {
+    const firstSlot = item[0] || null;
     setSlotIndex(index);
     setDay({
-      day: item[0] && Days[item[0].datetime.getDay()],
-      date: item[0] && item[0].datetime.getDate(),
+      day: firstSlot ?  Days[item[0].datetime.getDay()] : "N/A",
+      date: firstSlot ? firstSlot.datetime.getDate() : "N/A",
     });
   };
   
