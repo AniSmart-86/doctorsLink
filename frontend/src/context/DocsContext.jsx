@@ -8,7 +8,7 @@ export const DocsContext = createContext();
 export const DocsContextProvider = (props) => {
   const currencySymbol = "$";
 
-  const BackendUrl =  'http://localhost:5000';
+  const BackendUrl =  'https://doctors-link-api.vercel.app';
 
   const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
   const[ userData, setUserData] = useState(false)

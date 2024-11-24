@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['https://doctors-link.vercel.app'],
     credentials: true,
     methods: ['GET', 'HEAD', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['content-Type', 'AUthorization', 'token'],
@@ -42,7 +42,7 @@ app.use("/api/admin", admin);
 // Error MiddleWare
 app.use(errorHandler);
 
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 5000;
 const MONGOURL = process.env.MONGO_URL;
 
 mongoose.connect(MONGOURL).then(()=>{
