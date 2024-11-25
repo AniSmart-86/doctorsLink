@@ -8,7 +8,7 @@ export const DocsContext = createContext();
 export const DocsContextProvider = (props) => {
   const currencySymbol = "$";
 
-  const BackendUrl =  'https://doctorslink-api.onrender.com';
+  const BackendUrl = 'https://doctorslink-api.onrender.com';
 
   const [token, setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : false);
   const[ userData, setUserData] = useState(false)

@@ -11,11 +11,28 @@ const About = () => {
         <div className='my-10 flex flex-col md:flex-row gap-12'>
             <img className='w-full md:max-w-[360px]' src={aboutImg} alt="" />
             <div className='flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-600 leading-6'>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Rem, similique?</p>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Commodi repellendus aperiam quidem culpa reiciendis molestiae earum voluptatem! Culpa laborum labore cupiditate blanditiis perspiciatis reprehenderit at. Quas architecto nam sunt magnam!</p>
+                <p>
+At DocLink, we believe that healthcare should be accessible, efficient, and patient-centered. Our mission is to revolutionize the way patients schedule and manage their doctor's appointments,
+</p>
+                <p> making healthcare more convenient, affordable, and effective.</p>
 
                 <b>Our Vision</b>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Obcaecati nostrum asperiores aperiam quasi dicta nemo dolores perspiciatis, corrupti in reprehenderit suscipit laborum necessitatibus, et enim nulla praesentium dolorem itaque ratione.</p>
+                <p>Our vision is to create a seamless and integrated healthcare experience that empowers patients to take control of their health. We aim to achieve this by:
+
+- Providing a user-friendly and intuitive platform for patients to schedule and manage their appointments
+- Partnering with healthcare providers to offer a wide range of medical specialties and services
+- Leveraging technology to streamline communication, reduce wait times, and improve patient outcomes
+- Fostering a culture of transparency, accountability, and patient-centered care
+</p>
+                <b>Our Value</b>
+                <p> At DocLink, we value:
+
+- Patient-centered care: We put the needs and preferences of our patients at the forefront of everything we do.
+- Innovation: We embrace new technologies and innovative solutions to improve the healthcare experience.
+- Collaboration: We partner with healthcare providers, patients, and other stakeholders to create a seamless and integrated healthcare ecosystem.
+- Quality: We strive for excellence in everything we do, from the design of our platform to the delivery of our services.
+
+</p>
             </div>
         </div>
         <div className='text-xl my-4'>

@@ -6,8 +6,13 @@ const Footer = () => {
         <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-10 text-sm '>
 
 <div>
-    <img className='mb-5 w-8 bg-blue-100' src={logo} alt="" />
-    <p className='w-full md:w-2/3 text-gray-600 leading-6'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, voluptas inventore? Ab rerum repudiandae aliquam sequi facilis repellendus mollitia vitae, modi quos fugiat at laborum nam.</p>
+    <div className='flex items-center my-3'>
+
+    <img className='w-8 bg-blue-100 rounded-full mx-1' src={logo} alt="" />
+    <span className='text-md font-semibold text-red-700'>DocLink</span>
+    </div>
+    <p className='w-full md:w-2/3 text-gray-600 leading-6'>At <span className='text-sm text-red-700'>DocLink</span> we believe that healthcare should be accessible, efficient, and patient-centered. Our mission is to revolutionize the way patients schedule and manage their doctor's appointments, making healthcare more convenient, affordable, and effective.
+    </p>
 </div>
 
 <div>
