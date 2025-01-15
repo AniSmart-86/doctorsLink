@@ -1,7 +1,6 @@
-import asyncHandler from 'express-async-handler';
-import jwt from 'jsonwebtoken'
-import User from '../Models/userModel.js';
-
+const asyncHandler = require('express-async-handler');
+const jwt = require('jsonwebtoken');
+const User = require('../Models/userModel.js');
 
 
 
@@ -41,7 +40,7 @@ try {
 
 //ADMIN ONLY
 
-export const AdminOnly = asyncHandler(async (req, res, next)=>{
+const AdminOnly = asyncHandler(async (req, res, next)=>{
     if(req.user && req.user.role === "admin"){
         next();
     }else{
@@ -51,4 +50,4 @@ export const AdminOnly = asyncHandler(async (req, res, next)=>{
 });
 
 
-export default Protect
+module.exports = {Protect, AdminOnly}

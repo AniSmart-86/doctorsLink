@@ -1,109 +1,158 @@
-import bcrypt from 'bcryptjs'
-import { v2 as cloudinary} from 'cloudinary'
-import doctorModel from '../Models/doctorModel.js';
-import validator from 'validator';
-import upload from '../multer.cjs';
-import jwt from 'jsonwebtoken'
+const express = require('express');
+const multer = require('multer');
+const cloudinary = require('cloudinary').v2;
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const validator = require('validator');
+const doctorModel = require('../Models/doctorModel');
 
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/');
+  },
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
 
-// API for  doctors
-const addDoctor = async(req, res) =>{
-
+const upload = multer({
+  storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5 MB file size limit
+  },
+  fileFilter: (req, file, cb) => {
     try {
-        
-        const { name, email, password, speciality, degree, experience, about, fees, address} = req.body;
-
-        const imageFile = req.file
-        console.log(imageFile)
-
-        // console.log({ name, email, password, speciality, degree, experience, about, fees, address},imageFile)
-
-        if( !name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address){
-            return res.json({success: false, message: "Missing details!"})
-
-        }
-
-       
-
-        // validating email
-        if(!validator.isEmail(email)){
-            return res.json({success: false, message: "Please enter a valid email!"})
-        }
+      if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        return cb(new Error('Only image files are allowed!'));
+      }
+      cb(null, true);
+    } catch (error) {
+      cb(error);
+    }
+  },
+});
 
 
-        // validating strong password
-        if(password.length < 8){
-            return res.json({success: false, message: "Password must be 8 characters"})
-        }
+const connectCloudinary = async () => {
+    cloudinary.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_SECRET_KEY,
+    });
+  }
+  
 
-        // hashing password
-        const salt = await bcrypt.genSalt(10)
-        const hashedPassword = await bcrypt.hash(password, salt)
+const addDoctor = async (req, res) => {
+  try {
+    const { name, email, password, speciality, degree, experience, about, fees, address } = req.body;
+    const image = req.file;
+
+    if (!name || !email || !password || !speciality || !degree || !experience || !about || !fees || !address) {
+      return res.json({ success: false, message: 'Missing details!' });
+    }
+
+    if (!validator.isEmail(email)) {
+      return res.json({ success: false, message: 'Please enter a valid email!' });
+    }
+
+    if (password.length < 8) {
+      return res.json({ success: false, message: 'Password must be 8 characters' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // const imageUpload = await cloudinary.uploader.upload(image.path, { resource_type: 'image' });
+    // const imageUrl = imageUpload.secure_url;
+
+    const doctorData = {
+      name,
+      email,
+      image: image.path,
+      password: hashedPassword,
+      speciality,
+      degree,
+      experience,
+      about,
+      fees,
+      address,
+      Date: Date.now(),
+    };
+
+    const newDoctor = new doctorModel(doctorData);
+    await newDoctor.save();
+
+    res.json({ success: true, message: 'Doctor Added' });
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
 
 
-
-        // upload image to cloudinary
-        // const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"});
-        // const imageUrl = imageUpload.secure_url;
-        // const imagePath = imageUpload.public_id;
-
-
-//         const fileTypes = /jpeg|jpg|png|gif/;
-// if (!req.file.mimetype.match(fileTypes)) {
-//   return res.json({ success: false, message: 'Only image files are allowed' });
-// }
+const getDoctors = async (req, res) => {
+    try {
+      const doctors = await doctorModel.find({});
+      res.json({ success: true, doctors });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ success: false, message: 'Unable to fetch doctors', error: error.message });
+    }
+  };
 
 
-const doctorData = {
-    name,
-    email,
-    password:hashedPassword,
-    speciality,
-    // image:imageUrl,
-    // path:imagePath,
-            degree,
-            experience,
-            about,
-            fees,
-            Date:Date.now(),
-            address: JSON.parse(address)
-        }
+  const editDoctor = async(res, req)=>{
+    try {
+        const { id } = req.params;
+    const { name, speciality, degree, experience, about, fees, address } = req.body;
 
-        const newDoctor = new doctorModel(doctorData)
-        await newDoctor.save()
-        res.json({success:true, message: "Doctor Added"})
+    const updatedData =  { name, speciality, degree, experience, about, fees, address };
+    if (req.file) updatedData.image = req.file.path; // Update image if uploaded
+
+    const doctors = await doctorModel.findByIdAndUpdate(id, updatedData, { new: true });
+
+    if (!doctors){ return res.status(404).json({ error: "Doctor Not Found" });}
+    res.status(200).json({ message: "Doctor updated successfully", doctors });
 
     } catch (error) {
-        console.log(error)
-        res.json({success: false, message: error.message})
+        console.error(error);
+      res.status(500).json({ success: false, message: 'Unable to edit doctors', error: error.message });
     }
-}
+  }
 
 
-// API FOR ADMIN LOGIN
-const loginAdmin = async (req, res)=>{
 
 
-try {
-
-    const {email, password} = req.body
-
-    if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD){
-
-        const token = jwt.sign(email+password, process.env.JWT_SECRET)
-        res.json({success: true, token})
-
-    }else{
-        res.json({success: false, message: "Invalid credentials"})
-    }
+  const deleteDoctor = async(res, req)=>{
+    try {
+        const { id } = req.params;
+        const doctors = await doctorModel.findByIdAndDelete(id);
     
-} catch (error) {
-    console.log(error)
-    res.json({success:false, message: error.message})
-}
+        if (!doctors) return res.status(404).json({ error: "Doctor not found" });
+    
+        res.status(200).json({ message: "Doctor deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Error deleting Doctor" });
+    }
+  }
 
 
-}
 
 
-export {addDoctor, loginAdmin}
+const loginAdmin = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const token = jwt.sign(email + password, process.env.JWT_SECRET);
+      res.json({ success: true, token });
+    } else {
+      res.json({ success: false, message: 'Invalid credentials' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { addDoctor, loginAdmin, upload, connectCloudinary, getDoctors, editDoctor, deleteDoctor };

@@ -4,6 +4,7 @@ import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { DocsContextProvider } from './context/DocsContext.jsx'
+import './components/rating.css'
 
 createRoot(document.getElementById('root')).render(
   <BrowserRouter>

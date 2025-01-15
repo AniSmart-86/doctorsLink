@@ -3,6 +3,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { DocsContext } from '../context/DocsContext';
 import RelatedDocs from '../components/RelatedDocs';
 import verifiedImg from '../assets/image.png';
+import ReviewForm from '../components/ReviewForm';
+import Rating from '../components/Rating';
 
 const Appointment = () => {
 
@@ -118,12 +120,15 @@ const handleClick = () => {
   
 
 
+
   return docInfo && (
     <div className='mb-72'>
         <div className='flex flex-col sm:flex-row gap-4'>
 
+     
             <div>
 <img className='bg-primary w-full sm:max-w-72 rounded-lg' src={docInfo.img} alt="" />
+
             </div>
 <div className='flex-1 border border-gray-400 rounded-lg p-8 py-7 bg-white mx-2 sm:mx-0 mt-[-80px] sm:mt-0'>
     <p className='text-2xl font-medium text-gray-900'>{docInfo.name}</p>
@@ -138,6 +143,7 @@ const handleClick = () => {
     </div>
     <p className="text-gray-500 font-medium mt-4">Appointment fee: <span className="text-gray-600">{currencySymbol}{docInfo.fees}</span></p>
 </div>
+           
         </div>
 
         {/* BOOKING SLOTE */}
@@ -166,14 +172,20 @@ const handleClick = () => {
           <div className="spinner-border animate-spin inline-block w-5 h-5 border-2 rounded-full text-indigo-500" role="status">
             {/* <span className="sr-only">Loading...</span> */}
           </div>
-          <span className="ml-2">Loading...</span>
+          <span className="ml-2">Processing...</span>
         </div>
                     ) : (
                         <span>Book an appointment</span>
                     )
                 }
             </button>
+            <div>
+
+
+            <Rating/>
+</div>
         </div>
+
         <RelatedDocs docId={docId} speciality={docInfo.speciality} />
         { 
             modal &&  <div className='fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50'>
@@ -184,7 +196,7 @@ const handleClick = () => {
                 
                 <p className='py-12 leading-6 text-center text-xl lg:text-2xl'>You have successfully booked an appointment with <span>{docInfo.name}</span> </p>
                 <p>Day: {day.day}</p>
-                <p>Date: {day.date}/11/24</p>
+                <p>Date: {day.date}/{new Date().getMonth()}/{new Date().getFullYear()}</p>
                 <p>Time: <span>{slotTime}</span> </p>
                 <p>Google Meet Link: <span className="text-blue-700 underline text-sm">https://meet.google.com/phw-jhjw-ddu</span>  </p>
                 <div className='items-center justify-center gap-4 lg:mt-10'>

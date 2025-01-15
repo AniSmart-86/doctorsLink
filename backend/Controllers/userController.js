@@ -1,9 +1,9 @@
-import asynchandler from 'express-async-handler';
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import validator from 'validator'
-import userModel from '../Models/userModel.js';
-import { v2 as cloudinary } from 'cloudinary';
+const asynchandler = require('express-async-handler');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const validator = require('validator');
+const userModel = require('../Models/userModel.js');
+const cloudinary = require('cloudinary').v2;
 
 
 
@@ -149,7 +149,7 @@ res.json({success: true, message: "profile updated"})
 }
 
 
-export { RegisterUser, LoginUser, getProfile, updateProfile}
+module.exports = { RegisterUser, LoginUser, getProfile, updateProfile}
 // check if user exists
 // const userExists = await Use r.findOne({email});
 

@@ -1,0 +1,24 @@
+.rating {
+    /* display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around; */
+  }
+  
+  .star {
+    font-size: 24px;
+    color: #ccc; /* Empty star color */
+    cursor: pointer;
+  }
+  
+  .star.active {
+    color: #ffd700; /* Active star color */
+  }
+  
+  .star:hover {
+    color: #ffd700; /* Hover star color */
+  }
+  
+  .star:hover ~ .star:not(.active) {
+    color: #ccc; /* Hover previous star color */
+  }
+  

@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'
+const jwt = require('jsonwebtoken')
 
 const authAdmin = async(req, res, next)=>{
 
@@ -26,4 +26,4 @@ next()
 
 }
 
-export default authAdmin
+module.exports = authAdmin

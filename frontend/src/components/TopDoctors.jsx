@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom'
 import { DocsContext } from '../context/DocsContext';
 import Loader from './Loader';
 import { motion } from 'framer-motion';
+import Rating from './Rating';
+import ReviewForm from './ReviewForm';
 
 
 
@@ -47,7 +49,10 @@ const TopDoctors = () => {
                         </div>
                         <p className="text-gray-900 text-lg font-medium">{item.name}</p>
                         <p className="text-gray-600 text-sm">{item.speciality}</p>
+                    <div className='flex justify-between items-center'>
                     <button className='border px-8 mt-3 rounded-3xl bg-green-500 text-white'>Book</button>
+                    
+                    </div>
                     </div>
                 </div>
             </motion.div>
