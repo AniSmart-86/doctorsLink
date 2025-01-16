@@ -10,6 +10,9 @@ const Rating = () => {
     const [newReview, setNewReview] = useState('');
     const [rating, setRating] = useState(0);
 
+    const [isLoading, setIsloading] = useState(false);
+
+
 
     // Fetch reviews on component mount
     useEffect(() => {
@@ -51,6 +54,16 @@ const Rating = () => {
         }
     };
 
+
+    const handleClick = ()=>{
+
+        setIsloading(true)
+setTimeout(() => {
+            setIsloading(false)
+        }, 2000);
+    }
+   
+
    
     const validReviews = reviews.filter((review) => review && review._id);
 
@@ -86,15 +99,19 @@ const Rating = () => {
                         ))}
                     </div>
                     <button
-                        className="mt-2 bg-green-700 text-white px-4 py-2 rounded"
+                        className="mt-2 bg-green-700 text-white px-4 py-2 rounded hover:scale-x-105 transition-all duration-1000"
                         type="submit"
+                        onClick={handleClick}
                     >
-                        Submit Review
+                        {
+                            isLoading ? 'Submitting...' :  'Submit Review'
+                        }
+                       
                     </button>
                 </form>
             </div>
         </div>
-    );
+    )
 };
 
 export default Rating;
