@@ -3,7 +3,7 @@ import React, {useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { DocsContext } from '../context/DocsContext';
 const Rating = () => {
-    const {BackendUrl} = useContext(DocsContext)
+    const { BackendUrl } = useContext(DocsContext)
     // const BackendUrl = 'http://localhost:5000/api/users';
     const { docId } = useParams();
     const [reviews, setReviews] = useState([]);
@@ -15,7 +15,7 @@ const Rating = () => {
     useEffect(() => {
         const fetchReviews = async () => {
             try {
-                const response = await axios.get(`${BackendUrl}/getreview?doctorId=${docId}`);
+                const response = await axios.get(`${BackendUrl}/api/users/getreview?doctorId=${docId}`);
                 if (response.data.success) {
                     setReviews(response.data.reviews || []);
                 }
@@ -32,7 +32,7 @@ const Rating = () => {
 
         if (newReview && rating > 0) {
             try {
-                const response = await axios.post(`${BackendUrl}/review`, {
+                const response = await axios.post(`${BackendUrl}/api/users/review`, {
                     doctorId: docId,
                     text: newReview,
                     rating,
